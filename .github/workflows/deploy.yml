@@ -46,7 +46,7 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           port: ${{ secrets.SERVER_PORT }}
           key: ${{ secrets.SERVER_SSH_KEY }}
-          source: "dist/*"
+          source: "dist"
           target: "/home/jesperklotzl-retake/htdocs/retake.jesperklotzl.dk/"
 
       - name: Trigger PM2 auto-restart
