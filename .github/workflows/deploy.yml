@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Deploy via git pull (server-side build)
+      - name: Deploy & Build on server (NVM + Git Pull)
         uses: appleboy/ssh-action@v1.1.0
         with:
           host: ${{ secrets.SERVER_HOST }}
@@ -22,20 +22,26 @@ jobs:
           port: ${{ secrets.SERVER_PORT }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            APP_ROOT="/home/jesperklotzl-retake/htdocs/retake.jesperklotzl.dk"
-            APP_DIR="$APP_ROOT/app"
+            APP_DIR="/home/jesperklotzl-retake/htdocs/retake.jesperklotzl.dk"
 
-            echo "➡️ Entering app root..."
-            cd $APP_ROOT
+            echo "Loading NVM..."
+            export NVM_DIR="$HOME/.nvm"
+            source "$NVM_DIR/nvm.sh"
 
-            # 1. Clone repo into /app if missing
-            if [ ! -d "$APP_DIR/.git" ]; then
+            echo "Using correct Node version:"
+            node -v
+            npm -v
+
+            echo "Entering app root..."
+            cd $APP_DIR
+
+            if [ ! -d "$APP_DIR/app/.git" ]; then
               echo "First-time clone into /app"
-              git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} $APP_DIR
+              git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} $APP_DIR/app
             fi
 
             echo "Entering app folder..."
-            cd $APP_DIR
+            cd $APP_DIR/app
 
             echo "Pulling latest code..."
             git pull origin main
@@ -44,16 +50,14 @@ jobs:
             npm install
 
             echo "Cleaning old dist..."
-            rm -rf $APP_ROOT/dist
-            mkdir -p $APP_ROOT/dist
+            rm -rf dist
 
             echo "Building Vite dist..."
             npm run build
 
             echo "Copying dist to server..."
-            cp -r dist/* $APP_ROOT/dist/
+            cp -r dist/* ../dist/
 
             echo "Triggering PM2 reload..."
-            cd $APP_ROOT
+            cd ..
             touch reload.flag
-
