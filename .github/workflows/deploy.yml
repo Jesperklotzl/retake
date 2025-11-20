@@ -27,9 +27,11 @@ jobs:
             echo "Entering app folder..."
             cd $APP_DIR
 
-            # 1. Clone repo if first time
+            # 1. If the project is NOT cloned yet:
             if [ ! -d "$APP_DIR/.git" ]; then
-              echo "Repository not found. Cloning..."
+              echo "First-time setup: Cloning repository into app folder..."
+            
+              # Clone INTO the directory
               git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} $APP_DIR
             fi
 
@@ -42,7 +44,7 @@ jobs:
             echo "Cleaning old dist..."
             rm -rf dist
 
-            echo "Building fresh production Vite dist..."
+            echo "🏗️ Building fresh production Vite dist..."
             npm run build
 
             echo "Triggering PM2 autoreload..."
