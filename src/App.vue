@@ -3,4 +3,6 @@
 
 <template>
 
+  <h2 class="text-center">Hello world</h2>
+
 </template>
