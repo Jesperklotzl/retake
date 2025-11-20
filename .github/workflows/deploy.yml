@@ -22,18 +22,20 @@ jobs:
           port: ${{ secrets.SERVER_PORT }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            APP_DIR="/home/jesperklotzl-retake/htdocs/retake.jesperklotzl.dk"
+            APP_ROOT="/home/jesperklotzl-retake/htdocs/retake.jesperklotzl.dk"
+            APP_DIR="$APP_ROOT/app"
+
+            echo "➡️ Entering app root..."
+            cd $APP_ROOT
+
+            # 1. Clone repo into /app if missing
+            if [ ! -d "$APP_DIR/.git" ]; then
+              echo "First-time clone into /app"
+              git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} $APP_DIR
+            fi
 
             echo "Entering app folder..."
             cd $APP_DIR
-
-            # 1. If the project is NOT cloned yet:
-            if [ ! -d "$APP_DIR/.git" ]; then
-              echo "First-time setup: Cloning repository into app folder..."
-            
-              # Clone INTO the directory
-              git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} $APP_DIR
-            fi
 
             echo "Pulling latest code..."
             git pull origin main
@@ -42,10 +44,16 @@ jobs:
             npm install
 
             echo "Cleaning old dist..."
-            rm -rf dist
+            rm -rf $APP_ROOT/dist
+            mkdir -p $APP_ROOT/dist
 
-            echo "🏗️ Building fresh production Vite dist..."
+            echo "Building Vite dist..."
             npm run build
 
-            echo "Triggering PM2 autoreload..."
+            echo "Copying dist to server..."
+            cp -r dist/* $APP_ROOT/dist/
+
+            echo "Triggering PM2 reload..."
+            cd $APP_ROOT
             touch reload.flag
+
