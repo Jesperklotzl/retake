@@ -47,7 +47,7 @@ jobs:
           port: ${{ secrets.SERVER_PORT }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           source: "dist/*"
-          target: "/home/jesperklotzl-retake/htdocs/retake.jesperklotzl.dk/dist"
+          target: "/home/jesperklotzl-retake/htdocs/retake.jesperklotzl.dk/"
 
       - name: Trigger PM2 auto-restart
         uses: appleboy/ssh-action@v1.1.0
