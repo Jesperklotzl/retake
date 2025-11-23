@@ -1,7 +1,12 @@
 @import 'tailwindcss';
 
+@font-face {
+    font-family: "AdwaitaSans-Regular";
+    src: url("/src/assets/AdwaitaSans-Regular.ttf") format("ttf");
+}
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "AdwaitaSans-Regular", system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -27,14 +32,8 @@ a:hover {
 body {
   margin: 0;
   display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
 }
 
 button {
@@ -61,10 +60,14 @@ button:focus-visible {
 }
 
 #app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+    width: 100%;
+}
+
+section {
+    max-width: 1440px;
+    width: 100%;
+    margin: 0 auto;
+    padding: clamp(40px, -0.9091px + 11.3636vw, 140px) 2rem;
 }
 
 @media (prefers-color-scheme: light) {
