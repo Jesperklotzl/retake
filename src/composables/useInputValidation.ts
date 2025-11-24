@@ -1,5 +1,5 @@
 // useInputValidation.ts
-import { ref } from 'vue';
+import {ref} from 'vue';
 
 export function useInputValidation() {
     const isValid = ref(true);
