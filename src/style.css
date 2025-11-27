@@ -12,7 +12,8 @@
 
     color-scheme: light dark;
     color: rgba(255, 255, 255, 0.87);
-    background-color: #242424;
+    /*background-color: #242424;*/
+    background-color: #303030;
 
     font-synthesis: none;
     text-rendering: optimizeLegibility;
@@ -74,7 +75,7 @@ section {
     max-width: 1440px;
     width: 100%;
     margin: 0 auto;
-    padding: clamp(40px, -0.9091px + 11.3636vw, 140px) 2rem;
+    padding:  2rem;
 }
 
 @media (prefers-color-scheme: light) {

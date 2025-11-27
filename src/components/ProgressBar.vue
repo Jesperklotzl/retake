@@ -10,7 +10,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const progress = ref(0);
-let startTime = 0;
+let startTime = 1200;
 let timer: number | null = null;
 
 function tick() {
@@ -41,15 +41,15 @@ onBeforeUnmount(() => timer && clearInterval(timer));
 </script>
 
 <template>
-    <div class="flex flex-col gap-1 w-full">
-        <div class="w-full h-3 bg-gray-200 rounded-full overflow-hidden">
+    <div class="flex flex-col gap-1 w-full h-full absolute  top-0 bottom-o left-0">
+        <div class="w-full bg-white rounded-sm h-full p-0.5 overflow-hidden">
             <div
-                class="h-full bg-green-500 transition-all duration-200 ease-out"
+                class="h-full relative bg-[#f97316] transition-all rounded-sm duration-200 ease-out"
                 :style="{ width: progress + '%' }"
             >
-                {{ progress.toFixed(0) + '%' }}
+                <span class="absolute left-4 top-2/4 -translate-y-6/12 text-white text-[12px]">
+                    {{ progress.toFixed(0) + '%' }}</span>
             </div>
         </div>
-
     </div>
 </template>

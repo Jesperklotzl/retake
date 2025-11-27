@@ -21,7 +21,7 @@ import l16 from "../assets/images/slider/l16.webp"
 import l17 from "../assets/images/slider/l17.webp"
 import l18 from "../assets/images/slider/l18.webp"
 
-const props = defineProps<{ offset?: number }>()
+const props = defineProps<{ offset: number }>()
 
 const all = [
     l1, l2, l3, l4, l5, l6, l7, l8, l9,
