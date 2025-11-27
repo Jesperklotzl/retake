@@ -78,8 +78,8 @@ onMounted(() => {
             <Transition
                 enter-from-class="opacity-0"
                 enter-active-class="transition delay-400 duration-1200"
-                leave-active-class="transition duration-1200"
-                leave-to-class="opacity-0"
+                leave-active-class="transition duration-1000"
+                leave-to-class="-translate-y-[100px] opacity-0"
             >
                 <h1
                     v-if="show"
@@ -92,8 +92,8 @@ onMounted(() => {
             <Transition
                 enter-from-class="opacity-0"
                 enter-active-class="transition delay-300 duration-1200"
-                leave-active-class="transition duration-1200"
-                leave-to-class="opacity-0"
+                leave-active-class="transition duration-1000"
+                leave-to-class="-translate-y-[100px] opacity-0"
             >
                 <p
                     v-if="show"
