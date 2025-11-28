@@ -3,6 +3,7 @@ import {useInputValidation} from './composables/useInputValidation';
 import {computed, onMounted, ref, Transition} from "vue";
 import ProgressBar from "./components/ProgressBar.vue";
 import BackgroundGallery from "./components/BackgroundGallery.vue";
+import CaseSlider from "./components/CaseSlider.vue";
 const {isValid, errorMessage, validate} = useInputValidation();
 
 const url               = ref<string>('')
@@ -13,9 +14,9 @@ const show              = ref<boolean>(false)
 const markers           = ref<Record<number, string>>({
     0: 'Initializing...',
     20: 'Preparing...',
-    40: 'Loading resources...',
-    60: 'Processing...',
-    80: 'Almost there...',
+    40: 'Kunstig intelligens, ægte resultater...',
+    60: 'Smarte løsninger til smarte virksomheder...',
+    80: 'Udarbejder usecases...',
     100: 'Completed!'
 })
 
@@ -105,7 +106,7 @@ onMounted(() => {
 
             <form
                 @submit.prevent="validateURL"
-                class="flex flex-col gap-4 items-start"
+                class="flex flex-col gap-4 items-start z-1"
             >
                 <Transition
                     enter-from-class="opacity-0"
@@ -125,12 +126,12 @@ onMounted(() => {
                             type="text"
                             placeholder="Indtast din hjemmeside URL (f.eks. virksomhed.dk)"
                         />
-                        <span class="absolute -z-1 top-0 py-3 delay-180 px-4 left-0 text-white transition-all duration-1200"
-                              :class="{ 'translate-y-[24px]' : startAnimation }"
+                        <span class="absolute -z-1 top-0 opacity-0 -translate-y-[20px] py-3 px-4 left-0 text-white transition-all duration-1200"
+                              :class="{ '-translate-y-[68px] opacity-100' : startAnimation }"
                               v-text="currentMarker"
                         />
                         <span class="py-3 px-4 absolute left-0 text-black top-0 transition-all duration-1200"
-                              :class="{ 'translate-y-[48px] text-white' : startAnimation }"
+                              :class="{ '-translate-y-[44px] text-white' : startAnimation }"
                               v-text="url"
                         />
                         <ProgressBar
@@ -157,20 +158,23 @@ onMounted(() => {
                     />
                 </Transition>
 
-<!--                <div-->
-<!--                    class="bg-[#f97316] absolute top-0 w-0 h-full right-0 rounded-lg transition-all duration-1200"-->
-<!--                    :class="{ 'w-full' : startAnimation }"-->
-<!--                >-->
-<!--                    -->
-<!--                </div>-->
-
-
                 <p class="text-red-500 text-sm" v-if="!isValid">{{ errorMessage }}</p>
 
             </form>
+
+            <Transition
+                enter-from-class="opacity-0"
+                enter-active-class="transition delay-200 duration-1200"
+                leave-active-class="transition delay-200 duration-1200"
+                leave-to-class="opacity-0"
+            >
+                <div v-if="startAnalysis" class="absolute bottom-0 left-0 w-full h-full">
+                    <CaseSlider/>
+                </div>
+            </Transition>
+
         </div>
     </section>
-
 
     <Transition
         enter-from-class="opacity-0"
